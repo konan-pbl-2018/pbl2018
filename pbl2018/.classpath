@@ -5,17 +5,17 @@
 	<classpathentry kind="lib" path="cv97r140.jar"/>
 	<classpathentry kind="lib" path="j3dcore.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="pbl2017_64bit/lib"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="pbl2018/lib"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="j3dutils.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="pbl2017_64bit/lib"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="pbl2018/lib"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="vecmath.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="pbl2017_64bit/lib"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="pbl2018/lib"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
