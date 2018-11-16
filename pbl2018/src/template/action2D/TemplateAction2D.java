@@ -1,4 +1,4 @@
-package templete.action2D;
+package template.action2D;
 
 import javax.vecmath.Vector2d;
 
