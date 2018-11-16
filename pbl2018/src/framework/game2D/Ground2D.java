@@ -11,19 +11,13 @@ import javax.imageio.ImageIO;
 import javax.media.j3d.Background;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.ImageComponent2D;
-import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 
-import framework.AI.GeometryGraph;
-import framework.gameMain.ActorModel;
 import framework.gameMain.GameModel;
 import framework.model3D.BaseObject3D;
-import framework.model3D.GeometryCollector;
 import framework.model3D.Model3D;
-import framework.model3D.ModelFactory;
 import framework.model3D.Object3D;
 import framework.model3D.Placeable;
-import framework.model3D.Universe;
 import framework.physics.Ground;
 
 public class Ground2D extends GameModel implements Placeable {
@@ -35,7 +29,7 @@ public class Ground2D extends GameModel implements Placeable {
 	private Ground ground;
 
 	Model3D stageModel = null;
-	
+
 	public Ground2D(String groundFilename, String backgroundFilename,
 	int width, int height) {
 		this(groundFilename, backgroundFilename, width, height, 1.0);
@@ -47,7 +41,7 @@ public class Ground2D extends GameModel implements Placeable {
 		if (stageModel == null) {
 			stageModel = getModel();
 		}
-		
+
 		if (stageTrans == null) {
 			stageTrans = new TransformGroup();
 		}
@@ -86,7 +80,7 @@ public class Ground2D extends GameModel implements Placeable {
 					ImageComponent2D.FORMAT_RGB, backgroundImage);
 			background.setImage(imageCompornent);
 			BoundingSphere bs = new BoundingSphere();
-			bs.setRadius(100);
+			bs.setRadius(10000);
 			background.setApplicationBounds(bs);
 
 			stageTrans.addChild(background);
@@ -113,5 +107,5 @@ public class Ground2D extends GameModel implements Placeable {
 		// TODO 自動生成されたメソッド・スタブ
 		return stageTrans;
 	}
-	
+
 }
