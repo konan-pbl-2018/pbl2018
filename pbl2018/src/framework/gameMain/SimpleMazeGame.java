@@ -19,21 +19,19 @@ import framework.RWT.RWTContainer;
 import framework.RWT.RWTFrame3D;
 import framework.RWT.RWTVirtualController;
 import framework.RWT.RWTVirtualKey;
-import framework.game2D.Maze2D;
-import framework.model3D.Position3D;
 import framework.model3D.Universe;
 import framework.physics.PhysicsUtility;
-import framework.view3D.Camera3D;
 import framework.view3D.CameraMap;
 
 /**
  * 2D迷路ゲーム用のクラス
- * 
+ *
  * @author T.Kuno
- * 
+ *
  */
 
 public abstract class SimpleMazeGame extends AbstractGame implements IGameState {
+	protected RWTFrame3D frame;
 	protected Universe universe;
 	protected CameraMap camera;
 
@@ -42,22 +40,22 @@ public abstract class SimpleMazeGame extends AbstractGame implements IGameState 
 
 	protected double viewRangeWidth;
 	protected double viewRangeHeight;
-	
+
 	private IGameState currentState = this;
 
 	public abstract void init(Universe universe);
 
-	public abstract void progress(RWTVirtualController virtualController, long interval);	
-	
+	public abstract void progress(RWTVirtualController virtualController, long interval);
+
 	public SimpleMazeGame() {
 		PhysicsUtility.setGravityDirection(new Vector3d(0.0, 0.0, 0.0));
 	}
-	
+
 	@Override
 	protected IGameState getCurrentGameState() {
 		return currentState;
 	}
-	
+
 	protected void setCurrentGameState(IGameState state) {
 		currentState = state;
 	}
@@ -70,6 +68,7 @@ public abstract class SimpleMazeGame extends AbstractGame implements IGameState 
 	@Override
 	public void init(RWTFrame3D frame) {
 		// TODO Auto-generated method stub
+		this.frame = frame;
 		RWTContainer container = createRWTContainer();
 		frame.setContentPane(container);
 		GraphicsConfiguration gc = null;
@@ -109,17 +108,17 @@ public abstract class SimpleMazeGame extends AbstractGame implements IGameState 
 		container.getPrimaryRWTCanvas3D().attachCamera(camera);
 		universe.compile();
 	}
-	
+
 	@Override
 	public void update(RWTVirtualController virtualController, long interval) {
 		progress(virtualController, interval);
 		camera.adjust(interval);
 	}
-	
+
 	protected RWTContainer createRWTContainer() {
 		return new RWTContainer() {
 				@Override
-				public void build(GraphicsConfiguration gc) {				
+				public void build(GraphicsConfiguration gc) {
 					RWTCanvas3D canvas;
 					if (gc != null) {
 						canvas = new RWTCanvas3D(gc);
@@ -140,13 +139,30 @@ public abstract class SimpleMazeGame extends AbstractGame implements IGameState 
 				public void keyTyped(RWTVirtualKey key) {}
 			};
 	}
-	
+
+	protected void changeContainer(RWTContainer container) {
+		frame.setContentPane(container);
+		GraphicsConfiguration gc = null;
+		if (frame.isShadowCasting()) {
+
+			// 影を付ける場合
+			// ステンシルバッファを使用する GraphicsConfiguration の生成
+			GraphicsEnvironment ge = GraphicsEnvironment
+					.getLocalGraphicsEnvironment();
+			GraphicsDevice gd = ge.getDefaultScreenDevice();
+			GraphicsConfigTemplate3D gct3D = new GraphicsConfigTemplate3D();
+			gct3D.setStencilSize(8);
+			gc = gd.getBestConfiguration(gct3D);
+		}
+		container.build(gc);
+	}
+
 	/////////////////////////////////////////////////////////
 	//
 	// 2Dゲームにおけるカメラの設定や見え方、その範囲などに関するメソッド
 	//
 	/////////////////////////////////////////////////////////
-	
+
 	/**
 	 * カメラが見る範囲をwidthとheightで指定する
 	 * @param width
@@ -161,10 +177,10 @@ public abstract class SimpleMazeGame extends AbstractGame implements IGameState 
 		camera.getView().setCompatibilityModeEnable(true);
 		camera.getView().setVpcToEc(t);
 	}
-	
+
 	/**
 	 * カメラが見ている範囲の幅を返す。
-	 * 
+	 *
 	 * @return 見ている範囲の幅
 	 */
 	public double getViewRangeWidth() {
@@ -173,7 +189,7 @@ public abstract class SimpleMazeGame extends AbstractGame implements IGameState 
 
 	/**
 	 * カメラが見ている範囲の幅をviewRangeWidthで設定する
-	 * 
+	 *
 	 * @param viewRangeWidth
 	 *            --- 新しいカメラが見ている範囲の幅
 	 */
@@ -183,7 +199,7 @@ public abstract class SimpleMazeGame extends AbstractGame implements IGameState 
 
 	/**
 	 * カメラが見ている範囲の高さを返す。
-	 * 
+	 *
 	 * @return 見ている範囲の高さ
 	 */
 	public double getViewRangeHeight() {
@@ -192,7 +208,7 @@ public abstract class SimpleMazeGame extends AbstractGame implements IGameState 
 
 	/**
 	 * カメラが見ている範囲の高さをviewRangeWidthで設定する
-	 * 
+	 *
 	 * @param viewRangeHeight
 	 *            --- 新しいカメラが見ている範囲の高さ
 	 */
